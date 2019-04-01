@@ -8,6 +8,7 @@ def log_best(model, metric):
 
 
 def log_evaluation(logger, period=1, show_stdv=True, level=logging.DEBUG):
+    #　ほかの関数に引数として渡される関数
     def _callback(env):
         if period > 0 and env.evaluation_result_list \
                 and (env.iteration + 1) % period == 0:

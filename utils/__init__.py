@@ -1,7 +1,7 @@
 import time
 import pandas as pd
 from contextlib import contextmanager
-
+import feather as ftr
 
 @contextmanager
 def timer(name):
@@ -12,9 +12,9 @@ def timer(name):
 
 
 def load_datasets(feats):
-    dfs = [pd.read_feather(f'features/{f}_train.feather') for f in feats]
+    dfs = [ftr.read_dataframe(f'features/{f}_train.feather') for f in feats]
     X_train = pd.concat(dfs, axis=1)
-    dfs = [pd.read_feather(f'features/{f}_test.feather') for f in feats]
+    dfs = [ftr.read_dataframe(f'features/{f}_test.feather') for f in feats]
     X_test = pd.concat(dfs, axis=1)
     return X_train, X_test
 

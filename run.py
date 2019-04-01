@@ -8,6 +8,7 @@ import numpy as np
 
 from utils import load_datasets, load_target
 from logs.logger import log_best
+#lgbm関係はmodel.pyからimportしている
 from models.lgbm import train_and_predict
 
 
@@ -22,6 +23,7 @@ logging.basicConfig(
 )
 logging.debug('./logs/log_{0:%Y%m%d%H%M%S}.log'.format(now))
 
+#このfeatsは特徴量ファイル名(カラム名ではないので、複数列でも可(base等))
 feats = config['features']
 logging.debug(feats)
 
@@ -52,7 +54,7 @@ for train_index, valid_index in kf.split(X_train_all):
     y_preds.append(y_pred)
     models.append(model)
 
-    # スコア
+    # スコア(logger.pyで定義)
     log_best(model, config['loss'])
 
 # CVスコア
@@ -71,10 +73,13 @@ logging.debug(score)
 ID_name = config['ID_name']
 sub = pd.DataFrame(pd.read_csv('./data/input/test.csv')[ID_name])
 
+print(y_preds)
+
 y_sub = sum(y_preds) / len(y_preds)
 
-if y_sub.shape[1] > 1:
-    y_sub = np.argmax(y_sub, axis=1)
+print(y_sub)
+# if y_sub.shape[1] > 1:
+#     y_sub = np.argmax(y_sub, axis=1)
 
 sub[target_name] = y_sub
 

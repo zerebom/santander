@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from utils.__init__ import timer
+from __init__ import timer
 
 
 def get_arguments():
@@ -69,5 +69,5 @@ class Feature(metaclass=ABCMeta):
         self.test.to_feather(str(self.test_path))
 
     def load(self):
-        self.train = pd.read_feather(str(self.train_path))
-        self.test = pd.read_feather(str(self.test_path))
+        self.train = ftr.read_dataframe(str(self.train_path))
+        self.test = ftr.read_dataframe(str(self.test_path))
