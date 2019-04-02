@@ -5,12 +5,13 @@ from sklearn.model_selection import KFold
 import argparse
 import json
 import numpy as np
-
+np.random.seed(seed=42)
 from utils import load_datasets, load_target
 from logs.logger import log_best
 #lgbm関係はmodel.pyからimportしている
 from models.lgbm import train_and_predict
-
+from sklearn.model_selection import KFold, StratifiedKFold
+from scripts.data_augumation import augmation
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--config', default='./configs/default.json')
@@ -38,13 +39,15 @@ models = []
 
 lgbm_params = config['lgbm_params']
 
-kf = KFold(n_splits=3, random_state=0)
-for train_index, valid_index in kf.split(X_train_all):
+# kf = KFold(n_splits=3, random_state=0)
+skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+for trn_idx, val_idx in skf.split(X_train_all,y_train_all):
     X_train, X_valid = (
-        X_train_all.iloc[train_index, :], X_train_all.iloc[valid_index, :]
+        X_train_all.iloc[trn_idx, :], X_train_all.iloc[val_idx, :]
     )
-    y_train, y_valid = y_train_all[train_index], y_train_all[valid_index]
-
+    y_train, y_valid = y_train_all[trn_idx], y_train_all[val_idx]
+    X_train, y_train = augmation(X_train.values,y_train.values,t=2)
+    
     # lgbmの実行
     y_pred, model = train_and_predict(
         X_train, X_valid, y_train, y_valid, X_test, lgbm_params
