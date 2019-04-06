@@ -10,17 +10,31 @@ from __init__ import reduce_mem_usage
 
 Feature.dir = 'features'
 
+class Outliers(Feature):
+    def create_features(self):
+        global train, test
+        data = train.append(test)
+        data['outliers'] = 0
+        
+        data.loc[data.query('0.463<var_108<0.465').index.values, 'outliers'] = 1
+        data.loc[data.query('0.0976<var_12<0.0985').index.values,'outliers'] = 1
+        data.loc[data.query('0.0633<var_126<0.0637').index.values, 'outliers'] = 1
+        data.loc[data.query('0.059<var_181<0.061').index.values, 'outliers'] = 1
+        
+        test = data.iloc[train.shape[0]:, :].reset_index(drop=True)
+        train = data.iloc[:train.shape[0], :].reset_index(drop=True)
+
+        self.train['outliers'] = train['outliers']
+        self.test['outliers'] = test['outliers']
+
 class Spike_var_108(Feature):
     def create_features(self):
         global train, test
+        data = train.append(test)
 
-        train['spike_var_108'] = 0
-        spike108_index = train.query('0.463<var_108<0.465').index.values
-        train.loc[spike108_index, 'spike_var_108'] = 1
-
-        test['spike_var_108'] = 0
-        spike108_index = test.query('0.463<var_108<0.465').index.values
-        test.loc[spike108_index, 'spike_var_108'] = 1
+        data['spike_var_108'] = 0
+        spike108_index = data.query('0.463<var_108<0.465').index.values
+        data.loc[spike108_index, 'spike_var_108'] = 1
 
         self.train['spike_var_108'] = train['spike_var_108']
         self.test['spike_var_108'] = test['spike_var_108']

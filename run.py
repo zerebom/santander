@@ -40,7 +40,7 @@ models = []
 lgbm_params = config['lgbm_params']
 
 # kf = KFold(n_splits=3, random_state=0)
-skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=42)
+skf = StratifiedKFold(n_splits=9, shuffle=True, random_state=42)
 for trn_idx, val_idx in skf.split(X_train_all,y_train_all):
     X_train, X_valid = (
         X_train_all.iloc[trn_idx, :], X_train_all.iloc[val_idx, :]

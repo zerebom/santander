@@ -1,7 +1,8 @@
 {
     "features": [
         "base",
-        "spike_var_108"
+        "spike_var_108",
+        "outliers"
     ],
     "lgbm_params": {
         "bagging_freq": 5,
