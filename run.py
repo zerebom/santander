@@ -40,13 +40,13 @@ models = []
 lgbm_params = config['lgbm_params']
 
 # kf = KFold(n_splits=3, random_state=0)
-skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=42)
 for trn_idx, val_idx in skf.split(X_train_all,y_train_all):
     X_train, X_valid = (
         X_train_all.iloc[trn_idx, :], X_train_all.iloc[val_idx, :]
     )
     y_train, y_valid = y_train_all[trn_idx], y_train_all[val_idx]
-    X_train, y_train = augmation(X_train.values,y_train.values,t=2)
+    # X_train, y_train = augmation(X_train.values,y_train.values,t=2)
     
     # lgbmの実行
     y_pred, model = train_and_predict(
@@ -62,7 +62,7 @@ for trn_idx, val_idx in skf.split(X_train_all,y_train_all):
 
 # CVスコア
 scores = [
-    m.best_score['valid_0'][config['loss']] for m in models
+    m.best_score['valid_1'][config['loss']] for m in models
 ]
 score = sum(scores) / len(scores)
 print('===CV scores===')
