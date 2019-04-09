@@ -16,7 +16,8 @@ def load_datasets(feats):
     X_train = pd.concat(dfs, axis=1)
     dfs = [ftr.read_dataframe(f'features/{f}_test.feather') for f in feats]
     X_test = pd.concat(dfs, axis=1)
-    return X_train, X_test
+    features=X_train.columns.values
+    return X_train, X_test,features
 
 
 def load_target(target_name):

@@ -1,8 +1,8 @@
 {
     "features": [
         "base",
-        "spike_var_108",
-        "outliers"
+        "big_diff_mean",
+        "duplicates"
     ],
     "lgbm_params": {
         "bagging_freq": 5,
@@ -24,5 +24,6 @@
     },
     "loss": "auc",
     "target_name": "target",
-    "ID_name": "ID_code"
+    "ID_name": "ID_code",
+    "validation":"fold-out"
 }

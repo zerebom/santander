@@ -10,12 +10,19 @@ from __init__ import reduce_mem_usage
 
 Feature.dir = 'features'
 
+class Duplicates(Feature):
+    def create_features(self):
+        global train, test
+        self.train['dupulicates'] =train.loc[:,['var_108','var_12','var_126','var_181']].sum(axis=1)
+        self.test['dupulicates'] = test.loc[:, [
+            'var_108', 'var_12', 'var_126', 'var_181']].sum(axis=1)
+
 class Outliers(Feature):
     def create_features(self):
         global train, test
         data = train.append(test)
         data['outliers'] = 0
-        
+
         data.loc[data.query('0.463<var_108<0.465').index.values, 'outliers'] = 1
         data.loc[data.query('0.0976<var_12<0.0985').index.values,'outliers'] = 1
         data.loc[data.query('0.0633<var_126<0.0637').index.values, 'outliers'] = 1
