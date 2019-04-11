@@ -5,6 +5,7 @@ data/*/*.tsv
 data/*/*.zip
 features/*.feather
 features/importances/*.png
+notebooks/eda_pic/*
 
 # Created by https://www.gitignore.io/api/macos,python,jupyternotebook
 # Edit at https://www.gitignore.io/?templates=macos,python,jupyternotebook

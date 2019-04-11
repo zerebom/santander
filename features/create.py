@@ -10,6 +10,10 @@ from __init__ import reduce_mem_usage
 
 Feature.dir = 'features'
 
+class Lotate_vars(Feature):
+    def create_features(self):
+        self.train['col_name'] =feature
+        self.test['col_name'] =feature
 class Duplicates(Feature):
     def create_features(self):
         global train, test
