@@ -3,6 +3,7 @@ data/*/*.feather
 data/*/*.csv
 data/*/*.tsv
 data/*/*.zip
+data/*
 features/*.feather
 features/importances/*.png
 notebooks/eda_pic/*
